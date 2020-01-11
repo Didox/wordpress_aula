@@ -1,0 +1,55 @@
+@charset "UTF-8";
+/*
+Theme Name: Aula Wordpress
+Theme URI: http://www.torneseumprogramador.com.br/themas/aula_wp
+Author: Torne-se um programador
+Author URI: http://www.torneseumprogramador.com.br
+Description: Tema criado an segunda aula de wordpres do torne-se um programador
+Version: 0.0.1
+License: Free
+License URI: http://www.torneseumprogramador.com.br
+Text Domain: torneseumprogramador
+Tags: torneseumprogramador, programador, aula, tema
+
+Aprenda gratuitamente com os nossos conteúdos gravados, anote tudo e pague somente para tirar dúvidas em aulas particulares
+
+*/
+/*--------------------------------------------------------------
+>>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+*/
+
+
+.link-aula, .link-aula:hover{
+	text-decoration: none;
+	color: #0a2f40;
+}
+
+.paginacao{
+	text-align: center;
+	width: 100%;
+	padding: 30px;
+}
+
+.paginacao a, .paginacao a:hover {
+    color: #0a2f40;
+}
+
+.paginacao .current{
+	color: #cfcfcf;
+}
+
+.comment-form-comment textarea{
+	width: 100%;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+}
+
+.form-submit .submit{
+	background: #019e01;
+    color: #fff;
+    border: 0;
+    border-radius: 5px;
+    padding: 10px 26px 10px 25px;
+}
+

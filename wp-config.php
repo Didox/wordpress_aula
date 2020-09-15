@@ -1,94 +1,106 @@
 <?php
 /**
- * As configurações básicas do WordPress
+ * The base configuration for WordPress
  *
- * O script de criação wp-config.php usa esse arquivo durante a instalação.
- * Você não precisa usar o site, você pode copiar este arquivo
- * para "wp-config.php" e preencher os valores.
+ * The wp-config.php creation script uses this file during the
+ * installation. You don't have to use the web site, you can
+ * copy this file to "wp-config.php" and fill in the values.
  *
- * Este arquivo contém as seguintes configurações:
+ * This file contains the following configurations:
  *
- * * Configurações do MySQL
- * * Chaves secretas
- * * Prefixo do banco de dados
+ * * MySQL settings
+ * * Secret keys
+ * * Database table prefix
  * * ABSPATH
  *
- * @link https://codex.wordpress.org/pt-br:Editando_wp-config.php
+ * @link https://codex.wordpress.org/Editing_wp-config.php
  *
  * @package WordPress
  */
 
-// ** Configurações do MySQL - Você pode pegar estas informações com o serviço de hospedagem ** //
-/** O nome do banco de dados do WordPress */
-define('DB_NAME', 'wordpress_aula');
+// Sendgrid settings - Read in the sendgrid auth from the config //
+define('SENDGRID_USERNAME', $_ENV["SENDGRID_USERNAME"]);
+define('SENDGRID_PASSWORD', $_ENV["SENDGRID_PASSWORD"]); 
+  
+// S3 Config Info - read the S3 Access Keys from the config //
+define( 'AWS_ACCESS_KEY_ID', $_ENV["AWS_ACCESS_KEY_ID"]);
+define( 'AWS_SECRET_ACCESS_KEY', $_ENV["AWS_SECRET_ACCESS_KEY"]); 
+ 
+// ** ClearDB settings - from Heroku Environment ** //
+$db = parse_url($_ENV["CLEARDB_DATABASE_URL"]); 
 
-/** Usuário do banco de dados MySQL */
-define('DB_USER', 'root');
+// ** MySQL settings - You can get this info from your web host ** //
+/** The name of the database for WordPress */
+define('DB_NAME', trim($db["path"],"/"));
 
-/** Senha do banco de dados MySQL */
-define('DB_PASSWORD', 'root');
+/** MySQL database username */
+define('DB_USER', $db["user"]);
 
-/** Nome do host do MySQL */
-define('DB_HOST', 'localhost');
+/** MySQL database password */
+define('DB_PASSWORD', $db["pass"]);
 
-/** Charset do banco de dados a ser usado na criação das tabelas. */
+/** MySQL hostname */
+define('DB_HOST', $db["host"]);
+
+/** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
 
-/** O tipo de Collate do banco de dados. Não altere isso se tiver dúvidas. */
+/** The Database Collate type. Don't change this if in doubt. */
 define('DB_COLLATE', '');
 
 /**#@+
- * Chaves únicas de autenticação e salts.
+ * Authentication Unique Keys and Salts.
  *
- * Altere cada chave para um frase única!
- * Você pode gerá-las
- * usando o {@link https://api.wordpress.org/secret-key/1.1/salt/ WordPress.org
- * secret-key service}
- * Você pode alterá-las a qualquer momento para invalidar quaisquer
- * cookies existentes. Isto irá forçar todos os
- * usuários a fazerem login novamente.
+ * Change these to different unique phrases!
+ * You can generate these using the {@link https://api.wordpress.org/secret-key/1.1/salt/ WordPress.org secret-key service}
+ * You can change these at any point in time to invalidate all existing cookies. This will force all users to have to log in again.
  *
  * @since 2.6.0
  */
-define('AUTH_KEY',         'coloque a sua frase única aqui');
-define('SECURE_AUTH_KEY',  'coloque a sua frase única aqui');
-define('LOGGED_IN_KEY',    'coloque a sua frase única aqui');
-define('NONCE_KEY',        'coloque a sua frase única aqui');
-define('AUTH_SALT',        'coloque a sua frase única aqui');
-define('SECURE_AUTH_SALT', 'coloque a sua frase única aqui');
-define('LOGGED_IN_SALT',   'coloque a sua frase única aqui');
-define('NONCE_SALT',       'coloque a sua frase única aqui');
+define('AUTH_KEY',         $_ENV["AUTH_KEY"]);
+define('SECURE_AUTH_KEY',  $_ENV["SECURE_AUTH_KEY"]);
+define('LOGGED_IN_KEY',    $_ENV["LOGGED_IN_KEY"]);
+define('NONCE_KEY',        $_ENV["NONCE_KEY"]);
+define('AUTH_SALT',        $_ENV["AUTH_SALT"]);
+define('SECURE_AUTH_SALT', $_ENV["SECURE_AUTH_SALT"]);
+define('LOGGED_IN_SALT',   $_ENV["LOGGED_IN_SALT"]);
+define('NONCE_SALT',       $_ENV["NONCE_SALT"]);
 
 /**#@-*/
 
 /**
- * Prefixo da tabela do banco de dados do WordPress.
+ * WordPress Database Table prefix.
  *
- * Você pode ter várias instalações em um único banco de dados se você der
- * um prefixo único para cada um. Somente números, letras e sublinhados!
+ * You can have multiple installations in one database if you give each a unique
+ * prefix. Only numbers, letters, and underscores please!
  */
-$table_prefix = 'wp_';
+$table_prefix  = 'wp_';
 
 /**
- * Para desenvolvedores: Modo de debug do WordPress.
+ * WordPress Localized Language, defaults to English.
  *
- * Altere isto para true para ativar a exibição de avisos
- * durante o desenvolvimento. É altamente recomendável que os
- * desenvolvedores de plugins e temas usem o WP_DEBUG
- * em seus ambientes de desenvolvimento.
+ * Change this to localize WordPress. A corresponding MO file for the chosen
+ * language must be installed to wp-content/languages. For example, install
+ * de_DE.mo to wp-content/languages and set WPLANG to 'de_DE' to enable German
+ * language support.
+ */
+define('WPLANG', 'en');
+
+/**
+ * For developers: WordPress debugging mode.
  *
- * Para informações sobre outras constantes que podem ser utilizadas
- * para depuração, visite o Codex.
- *
- * @link https://codex.wordpress.org/pt-br:Depura%C3%A7%C3%A3o_no_WordPress
+ * Change this to true to enable the display of notices during development.
+ * It is strongly recommended that plugin and theme developers use WP_DEBUG
+ * in their development environments.
  */
 define('WP_DEBUG', false);
+define( 'WP_AUTO_UPDATE_CORE', false );
 
-/* Isto é tudo, pode parar de editar! :) */
+/* That's all, stop editing! Happy blogging. */
 
-/** Caminho absoluto para o diretório WordPress. */
+/** Absolute path to the WordPress directory. */
 if ( !defined('ABSPATH') )
 	define('ABSPATH', dirname(__FILE__) . '/');
 
-/** Configura as variáveis e arquivos do WordPress. */
+/** Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');
